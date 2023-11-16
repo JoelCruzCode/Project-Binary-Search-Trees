@@ -1,42 +1,6 @@
 import TreeNode from "./treeNode.js";
-// function TreeNode(data) {
-//   data;
-//   let left = null;
-//   let right = null;
+import { prettyPrint, sortArray } from "./functions.js";
 
-//   return { data, left, right };
-// }
-
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-  }
-};
-
-function sortArray(array) {
-  const sorted = [...array].sort((a, b) => {
-    return a - b;
-  });
-  let prevElement;
-  for (let i = 0; i < sorted.length; i++) {
-    if (sorted[i] === prevElement) {
-      sorted.splice(i - 1, 1);
-      i--;
-    }
-    prevElement = sorted[i];
-  }
-  return sorted;
-}
-// const unsortedArray = [
-//   1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 3, 3, 9, 4, 3, 3, 3,
-// ];
 const unsortedArray = [30, 40, 20, 32, 34, 36, 50, 60, 65, 70, 80, 85, 75];
 const sortedArray = sortArray(unsortedArray);
 
