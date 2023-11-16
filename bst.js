@@ -112,7 +112,22 @@ function BSTree(array) {
     return root;
   }
 
-  return { root, insertNode, deleteNode };
+  function findNode(value, root) {
+    if (root === null) {
+      return null;
+    }
+    if (value === root.data) {
+      return root;
+    }
+
+    if (value > root.data) {
+      return findNode(value, root.right);
+    } else {
+      return findNode(value, root.left);
+    }
+  }
+
+  return { root, insertNode, deleteNode, findNode };
 }
 
 const tree = BSTree(sortedArray);
@@ -120,3 +135,6 @@ tree.insertNode(9999, tree.root);
 prettyPrint(tree.root);
 tree.deleteNode(50, tree.root);
 prettyPrint(tree.root);
+
+let discovered = tree.findNode(33, tree.root);
+console.log(discovered);
