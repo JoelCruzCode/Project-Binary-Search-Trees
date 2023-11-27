@@ -91,7 +91,42 @@ function BSTree(array) {
     }
   }
 
-  return { root, insertNode, deleteNode, findNode };
+  function levelOrderRecursion(root, levelOrder = []) {
+    if (root === null) return levelOrder;
+
+    levelOrder.push(root.data);
+
+    levelOrderRecursion(root.left, levelOrder);
+    levelOrderRecursion(root.right, levelOrder);
+
+    return levelOrder;
+  }
+
+  function levelOrder(callBack) {
+    // traverse the tree in breadth-first level order and provide each node as an argument to the callback
+    const queue = [root];
+    const levelOrderList = [];
+    while (queue.length !== 0) {
+      const currentNode = queue.shift();
+
+      callBack ? callBack(currentNode) : levelOrderList.push(currentNode);
+
+      const enqueue = [currentNode?.left, currentNode?.right].filter(
+        (value) => value
+      );
+
+      queue.push(...enqueue);
+    }
+    if (levelOrderList.length > 0) return levelOrderList;
+  }
+  return {
+    root,
+    insertNode,
+    deleteNode,
+    findNode,
+    levelOrder,
+    levelOrderRecursion,
+  };
 }
 
 const tree = BSTree(sortedArray);
@@ -100,5 +135,10 @@ prettyPrint(tree.root);
 tree.deleteNode(50, tree.root);
 prettyPrint(tree.root);
 
-let discovered = tree.findNode(33, tree.root);
+let discovered = tree.findNode(32, tree.root);
 console.log(discovered);
+console.log(tree.root);
+// tree.levelOrder();
+console.log(tree.levelOrder());
+// tree.levelOrderRecursion(tree.root);
+console.log(tree.levelOrderRecursion(tree.root));
